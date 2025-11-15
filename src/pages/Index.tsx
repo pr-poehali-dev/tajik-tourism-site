@@ -26,7 +26,8 @@ const Index = () => {
       price: '850$',
       image: 'https://cdn.poehali.dev/projects/f28127ae-a8b2-4afe-b659-2efab5b68826/files/fd35df2a-df7d-44d7-908e-fd0072bf5fff.jpg',
       description: 'Легендарная дорога через Памирские горы с захватывающими видами',
-      type: 'adventure'
+      type: 'adventure',
+      coordinates: [38.5604, 71.5522]
     },
     {
       id: 2,
@@ -36,7 +37,8 @@ const Index = () => {
       price: '350$',
       image: 'https://cdn.poehali.dev/projects/f28127ae-a8b2-4afe-b659-2efab5b68826/files/7fed3f36-ea71-46fa-a8a1-06e72cb3ca6c.jpg',
       description: 'Древняя крепость и знакомство с культурой Таджикистана',
-      type: 'cultural'
+      type: 'cultural',
+      coordinates: [38.5367, 68.7784]
     },
     {
       id: 3,
@@ -46,7 +48,8 @@ const Index = () => {
       price: '280$',
       image: 'https://cdn.poehali.dev/projects/f28127ae-a8b2-4afe-b659-2efab5b68826/files/a59f13fe-007e-424b-a66d-8059ec11d253.jpg',
       description: 'Треккинг к озеру Александра Македонского в горах Фанских',
-      type: 'nature'
+      type: 'nature',
+      coordinates: [39.0850, 68.3731]
     }
   ];
 
@@ -90,6 +93,7 @@ const Index = () => {
             <a href="#tours" className="text-sm font-medium hover:text-primary transition-colors">Туры</a>
             <a href="#attractions" className="text-sm font-medium hover:text-primary transition-colors">Достопримечательности</a>
             <a href="#culture" className="text-sm font-medium hover:text-primary transition-colors">Культура</a>
+            <a href="#routes" className="text-sm font-medium hover:text-primary transition-colors">Карта</a>
             <a href="#gallery" className="text-sm font-medium hover:text-primary transition-colors">Галерея</a>
           </nav>
           <Button className="hidden md:flex">
@@ -391,6 +395,64 @@ const Index = () => {
                 </p>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      <section id="routes" className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Интерактивная карта</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Все маршруты и достопримечательности на карте Таджикистана
+            </p>
+          </div>
+          <div className="grid lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <Card className="overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="relative h-[600px] bg-muted">
+                    <iframe
+                      src="https://www.openstreetmap.org/export/embed.html?bbox=67.3%2C36.7%2C75.2%2C41.1&layer=mapnik&marker=38.5367%2C68.7784"
+                      className="w-full h-full border-0"
+                      title="Карта Таджикистана"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+              <div className="mt-4 text-sm text-muted-foreground text-center">
+                <a href="https://www.openstreetmap.org/?mlat=38.5367&mlon=68.7784#map=7/38.5367/68.7784" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                  Открыть полную карту →
+                </a>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold mb-4">Места на карте</h3>
+              {tours.map((tour) => (
+                <Card key={tour.id} className="hover:shadow-md transition-shadow cursor-pointer">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start gap-3">
+                      <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                        <img src={tour.image} alt={tour.title} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <CardTitle className="text-base mb-1">{tour.title}</CardTitle>
+                        <CardDescription className="flex items-center gap-1 text-xs">
+                          <Icon name="MapPin" size={12} />
+                          {tour.city}
+                        </CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="flex items-center justify-between text-sm">
+                      <Badge variant="outline" className="text-xs">{tour.type === 'adventure' ? 'Приключения' : tour.type === 'cultural' ? 'Культура' : 'Природа'}</Badge>
+                      <span className="font-semibold text-primary">{tour.price}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
